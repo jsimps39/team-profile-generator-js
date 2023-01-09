@@ -6,7 +6,7 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
-//const teamArray[];
+//const empArray[];
 
 const employeeInfo = [
     {
@@ -105,7 +105,7 @@ const employeeInfo = [
 ]
 
 
-const addEmployee = () =>{ 
+const addEmployee = () => { 
     return inquirer.createPromptModule(employeeInfo)
     .then(employeeData => {
         let { role, name, id, email, officeNumber, gitHub, school } = employeeData;
@@ -119,6 +119,13 @@ const addEmployee = () =>{
         if(role === 'Intern'){
             employee = new Intern(name, id, email, school)
         }
-    })
+    
+    empArray.push(employee);
 
- }
+    if(employeeData.confirmAddEmployee) {
+        return promptEmployee(empArray);
+     }else {
+        return empArray;
+     }
+ });
+}

@@ -74,5 +74,5 @@ module.exports = (team) => {
         &copy; 2022-2023
       </footer>
     </body>
-    </html>`
+    </html> `
 };
