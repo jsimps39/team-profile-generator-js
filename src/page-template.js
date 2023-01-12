@@ -1,6 +1,41 @@
 // create the team
 const generateTeamMembers = (team) => {
-    
+    for (const member of team) {
+        if(member.getRole() === 'Engineer') {
+        return `///html snip for engineer
+        <article>
+          <h2>${member.Engineer()}</h2>
+          <ul>
+            <li>ID: ${member.getId()}</li>
+            <li>Email: ${member.getEmail()}</li>
+            <li>GitHub: <a href="#github">${member.getGithub()}</a></li>
+          </ul>
+        </article>
+        `
+    } else if(member.getRole() === 'Intern') {
+    return `///html snip for engineer
+    <article>
+      <h2>${member.Intern()}</h2>
+      <ul>
+        <li>ID: ${member.getId()}</li>
+        <li>Email: ${member.getEmail()}</li>
+        <li>School: ${member.getSchool()}</li>
+      </ul>
+    </article>
+    `
+    } else if(member.getRole() === 'Manager') {
+    return `///html snip for engineer
+    <article>
+      <h2>${member.Manager()}</h2>
+      <ul>
+        <li>ID: ${member.getId()}</li>
+        <li>Email: ${member.getEmail()}</li>
+        <li>Office Number: ${member.getOfficeNumber()}</li>
+      </ul>
+    </article>
+    `
+    }
+}
 };
 
 // export function to generate entire page
