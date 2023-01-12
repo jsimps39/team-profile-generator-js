@@ -1,6 +1,6 @@
 // create the team
 const generateTeamMembers = (team) => {
-
+    
 };
 
 // export function to generate entire page

@@ -6,126 +6,139 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
-//const empArray[];
+const prompt = inquirer.createPromptModule();
 
-const employeeInfo = [
+const teamArray =[];
+
+const chooseEmployeeType = ( {type} ) => {
+    let response;
+    switch(type) {
+        case 'Engineer':{
+            response = prompt(engineerQuestions);
+        }
+        case 'Intern':{
+            response = prompt(internQuestions);
+        }
+        case 'Manager':{
+            response = prompt(managerQuestions);
+        }
+    }
+    console.log('response');
+};
+
+const managerQuestions = ([
     {
-        type: 'list',
-        message: 'What is this employees role?',
-        name: 'role',
-        choices: ['Manager', 'Engineer', 'Intern']
+        message: 'What is the managers name?',
+        name: 'name'
     },
-{
-    type: 'input',
-    message: 'What is this employees name?',
-    name: 'name',
-    validate: nameInput => {
-        if (nameInput){
-            return true;
-        }else {
-            console.log("Please return this employee's name");
-            return false;
-        }
+    {
+        message: 'What is the managers id?',
+        name: 'id'
+    },
+    {
+        message: 'What is the managers email?',
+        name: 'email'
+    },
+    {
+        message: 'What is the managers office number?',
+        name: 'officeNumber'
     }
-},
-{
-    type: 'input',
-    message: 'What is this employees id?',
-    name: 'id',
-    validate: idInput => {
-        if(idInput){
-            return true;
-        }else {
-            console.log('please enter this employees id');
-            return false;
-        }
+]).then(({ name, id, email, officeNumber}) => {
+    const manager = new Manager(name, id, email, officeNumber);
+    teamArray.push(manager);
+    console.log(teamArray);
+});
+const engineerQuestions = ([
+    {
+        message: 'What is the engineers name?',
+        name: 'name'
+    },
+    {
+        message: 'What is the engineers id?',
+        name: 'id'
+    },
+    {
+        message: 'What is the engineers email?',
+        name: 'email'
+    },
+    {
+        message: 'What is the engineers github?',
+        name: 'gitHub'
     }
-},
-{
-    type: 'input',
-    message: 'What is this employees email?',
-    name: 'email',
-    validate: emailInput => {
-        if (emailInput) {
-            return true;
-        }else{
-            console.log('please input employees email');
-            return false;
-        }
+]).then(({ name, id, email, gitHub}) => {
+    const engineer = new Engineer(name, id, email, gitHub);
+    teamArray.push(engineer);
+    console.log(teamArray);
+});
+const internQuestions = ([
+    {
+        message: 'What is the interns name?',
+        name: 'name'
+    },
+    {
+        message: 'What is the interns id?',
+        name: 'id'
+    },
+    {
+        message: 'What is the interns email?',
+        name: 'email'
+    },
+    {
+        message: 'What is the interns office number?',
+        name: 'officeNumber'
     }
-},
-{
-    type: 'input',
-    message: 'What is this managers office phone number?',
-    name: 'officeNumber',
-    when: (officeNumberInput) => officeNumberInput.role === 'Manager',
-    validate: officeNumberInput => {
-        if (officeNumberInput) {
-            return true;
-        }else{
-            console.log('please input the managers number');
-            return false;
-        }
-    }
-},
-{
-    type: 'input',
-    message: 'What is this employees github?',
-    name: 'gitHub',
-    when: (gitHubInput) => gitHubInput.role === 'Engineer',
-    validate: gitHubInput => {
-        if (gitHubInput) {
-            return true;
-        }else{
-            console.log('please input employees github');
-            return false;
-        }
-    }
-},
-{
-    type: 'input',
-    message: 'Where does this intern go to school?',
-    name: 'school',
-    when: (schoolInput) => schoolInput.role === 'Intern',
-    validate: schoolInput => {
-        if (schoolInput) {
-            return true;
-        }else{
-            console.log('please input the interns school');
-            return false;
-        }
-    }
-},
-{
-    type: 'confirm',
-    message: 'Do you want to add more employees to the list?',
-    name: 'confirmEmp',
-    default: false,
-},
-]
+]).then(({ name, id, email, school}) => {
+    const intern = new Intern(name, id, email, school);
+    teamArray.push(intern);
+    console.log(teamArray);
+});
 
 
-const addEmployee = () => { 
-    return inquirer.createPromptModule(employeeInfo)
-    .then(employeeData => {
-        let { role, name, id, email, officeNumber, gitHub, school } = employeeData;
-        let employee;
-        if(role === 'Manager'){
-            employee = new Manager(name, id, email, officeNumber)
-        }
-        if(role === 'Engineer'){
-            employee = new Engineer(name, id, email, gitHub)
-        }
-        if(role === 'Intern'){
-            employee = new Intern(name, id, email, school)
-        }
-    
-    empArray.push(employee);
-
-    if(employeeData.confirmAddEmployee) {
-        return promptEmployee(empArray);
-     }else {
-        return empArray;
-     }
- });
-}
+//needs work
+// prompt(managerQuestions)
+// .then(({ name, id, email, officeNumber}) => {
+//     const manager = new Manager(name, id, email, officeNumber);
+// })
+// .then(() => {
+//     return prompt({
+//         message: 'Would you like to add more employees',
+//         type: 'confirm',
+//         name: 'addMore'
+//     })
+// })
+// .then(({addMore}) => {
+//     if(addMore) {
+//         console.log('Continue')
+//     } else {
+//         console.log('Write File');
+//     }
+// })
+// .then (() => {
+//     return prompt({
+//         type: 'rawList',
+//         message: 'What kind of employee would you like to add?',
+//         choices: [
+//             'Intern',
+//             'Engineer',
+//             'Manager'
+//         ],
+//         name: 'type'
+//     })
+// })
+// .then(({ type }) => {
+//     switch(type) {
+//         case 'Engineer':{
+//             return prompt(engineerQuestions);
+//         }
+//         case 'Intern':{
+//             return prompt(internQuestions);
+//         }
+//         case 'Manager':{
+//             return prompt(managerQuestions);
+//         }
+//     }
+// })
+// .then((employee) => {
+//     const employee = new 
+//     teamArray(employee);
+// });
