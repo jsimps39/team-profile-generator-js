@@ -1,6 +1,5 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generatePage = require('src/page-template.js');
 
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
@@ -27,7 +26,7 @@ const chooseEmployeeType = ( {type} ) => {
     console.log('response');
 };
 
-const managerQuestions = ([
+const managerQuestions = [
     {
         message: 'What is the managers name?',
         name: 'name'
@@ -44,12 +43,8 @@ const managerQuestions = ([
         message: 'What is the managers office number?',
         name: 'officeNumber'
     }
-]).then(({ name, id, email, officeNumber}) => {
-    const manager = new Manager(name, id, email, officeNumber);
-    teamArray.push(manager);
-    console.log(teamArray);
-});
-const engineerQuestions = ([
+ ];//
+const engineerQuestions = [
     {
         message: 'What is the engineers name?',
         name: 'name'
@@ -66,12 +61,12 @@ const engineerQuestions = ([
         message: 'What is the engineers github?',
         name: 'gitHub'
     }
-]).then(({ name, id, email, gitHub}) => {
-    const engineer = new Engineer(name, id, email, gitHub);
-    teamArray.push(engineer);
-    console.log(teamArray);
-});
-const internQuestions = ([
+];//.then(({ name, id, email, gitHub}) => {
+//     const engineer = new Engineer(name, id, email, gitHub);
+//     teamArray.push(engineer);
+//     console.log(teamArray);
+// });
+const internQuestions = [
     {
         message: 'What is the interns name?',
         name: 'name'
@@ -88,11 +83,11 @@ const internQuestions = ([
         message: 'What is the interns school?',
         name: 'school'
     }
-]).then(({ name, id, email, school}) => {
-    const intern = new Intern(name, id, email, school);
-    teamArray.push(intern);
-    console.log(teamArray);
-});
+];//.then(({ name, id, email, school}) => {
+//     const intern = new Intern(name, id, email, school);
+//     teamArray.push(intern);
+//     console.log(teamArray);
+// });
 
 //functions go here 
 const confirmEmp = ({ confirmEmp }) => {
@@ -106,6 +101,7 @@ const confirmEmp = ({ confirmEmp }) => {
 const addMoreEmp = ({ addMore }) => {
     if(addMore) {
         console.log('Continue');
+        //need more code here 
     } else {
         const template = pageTemplate(teamArray);
         fs.writeFileSync('./dist/team.html', template);
@@ -129,16 +125,34 @@ const chooseEmpType = ({ chooseType }) => {
 };
 
 // already have this function on line 14?
-const getEmpType = ({ getType }) => {
+const getEmpType = async ({ getType }) => {
     switch(type) {
         case 'Engineer':{
-            return prompt(engineerQuestions);
+            //return prompt(engineerQuestions);
+            const response = await prompt(engineerQuestions);
+            const { name, id, email, officeNumber} = response;
+            const engineer = new Engineer(name, id, email, gitHub);
+            teamArray.push(engineer);
+            console.log(teamArray);
+            break;
         }
         case 'Intern':{
-            return prompt(internQuestions);
+            //return prompt(internQuestions);
+            const response = await prompt(internQuestions);
+            const { name, id, email, school} = response;
+            const intern = new Intern(name, id, email, school);
+            teamArray.push(intern);
+            console.log(teamArray);
+            break;
         }
         case 'Manager':{
-            return prompt(managerQuestions);
+            //return prompt(managerQuestions);
+            const response = await prompt(managerQuestions);
+            const { name, id, email, officeNumber} = response;
+            const manager = new Manager(name, id, email, officeNumber);
+            teamArray.push(manager);
+            console.log(teamArray);
+            break;
         }
     }
 };
@@ -189,8 +203,8 @@ prompt(managerQuestions)
             return prompt(managerQuestions);
         }
     }
-})
-.then((employee) => {
-    const employee = new 
-    teamArray(employee);
 });
+// .then((employee) => {
+//     const employee = new 
+//     teamArray(employee);
+// });
