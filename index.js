@@ -5,6 +5,7 @@ const generatePage = require('src/page-template.js');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const pageTemplate = require('./src/page-template');
 
 const prompt = inquirer.createPromptModule();
 
@@ -94,51 +95,53 @@ const internQuestions = ([
 });
 
 
-//needs work
-// prompt(managerQuestions)
-// .then(({ name, id, email, officeNumber}) => {
-//     const manager = new Manager(name, id, email, officeNumber);
-// })
-// .then(() => {
-//     return prompt({
-//         message: 'Would you like to add more employees',
-//         type: 'confirm',
-//         name: 'addMore'
-//     })
-// })
-// .then(({addMore}) => {
-//     if(addMore) {
-//         console.log('Continue')
-//     } else {
-//         console.log('Write File');
-//     }
-// })
-// .then (() => {
-//     return prompt({
-//         type: 'rawList',
-//         message: 'What kind of employee would you like to add?',
-//         choices: [
-//             'Intern',
-//             'Engineer',
-//             'Manager'
-//         ],
-//         name: 'type'
-//     })
-// })
-// .then(({ type }) => {
-//     switch(type) {
-//         case 'Engineer':{
-//             return prompt(engineerQuestions);
-//         }
-//         case 'Intern':{
-//             return prompt(internQuestions);
-//         }
-//         case 'Manager':{
-//             return prompt(managerQuestions);
-//         }
-//     }
-// })
-// .then((employee) => {
-//     const employee = new 
-//     teamArray(employee);
-// });
+prompt(managerQuestions)
+.then(({ name, id, email, officeNumber}) => {
+    const manager = new Manager(name, id, email, officeNumber);
+    teamArray.push(manager);
+})
+.then(() => {
+    return prompt({
+        message: 'Would you like to add more employees',
+        type: 'confirm',
+        name: 'addMore'
+    })
+})
+.then(({addMore}) => {
+    if(addMore) {
+        console.log('Continue');
+    } else {
+        const template = pageTemplate(teamArray);
+        fs.writeFileSync('./dist/team.html', template);
+        console.log('Success, written to File');
+    }
+})
+.then (() => {
+    return prompt({
+        type: 'rawList',
+        message: 'What kind of employee would you like to add?',
+        choices: [
+            'Intern',
+            'Engineer',
+            'Manager'
+        ],
+        name: 'type'
+    })
+})
+.then(({ type }) => {
+    switch(type) {
+        case 'Engineer':{
+            return prompt(engineerQuestions);
+        }
+        case 'Intern':{
+            return prompt(internQuestions);
+        }
+        case 'Manager':{
+            return prompt(managerQuestions);
+        }
+    }
+})
+.then((employee) => {
+    const employee = new 
+    teamArray(employee);
+});
