@@ -102,6 +102,10 @@ const addMoreEmp = ({ addMore }) => {
     if(addMore) {
         console.log('Continue');
         //need more code here 
+        chooseEmpType()
+        .then(getEmpType)
+        .then(confirmEmp)
+        .then(addMoreEmp);
     } else {
         const template = pageTemplate(teamArray);
         fs.writeFileSync('./dist/team.html', template);
