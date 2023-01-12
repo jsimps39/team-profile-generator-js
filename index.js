@@ -85,8 +85,8 @@ const internQuestions = ([
         name: 'email'
     },
     {
-        message: 'What is the interns office number?',
-        name: 'officeNumber'
+        message: 'What is the interns school?',
+        name: 'school'
     }
 ]).then(({ name, id, email, school}) => {
     const intern = new Intern(name, id, email, school);
@@ -113,6 +113,8 @@ const addMoreEmp = ({ addMore }) => {
     }
 };
 
+
+// already have this function on line 14?
 const chooseEmpType = ({ chooseType }) => {
     return prompt({
         type: 'rawList',
@@ -126,6 +128,7 @@ const chooseEmpType = ({ chooseType }) => {
     })
 };
 
+// already have this function on line 14?
 const getEmpType = ({ getType }) => {
     switch(type) {
         case 'Engineer':{
@@ -138,7 +141,7 @@ const getEmpType = ({ getType }) => {
             return prompt(managerQuestions);
         }
     }
-}
+};
 
 
 prompt(managerQuestions)
