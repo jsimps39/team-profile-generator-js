@@ -94,6 +94,52 @@ const internQuestions = ([
     console.log(teamArray);
 });
 
+//functions go here 
+const confirmEmp = ({ confirmEmp }) => {
+    return prompt({
+        message: 'Would you like to add more employees?',
+        type: 'confirm',
+        name: 'addMore'
+    })
+};
+
+const addMoreEmp = ({ addMore }) => {
+    if(addMore) {
+        console.log('Continue');
+    } else {
+        const template = pageTemplate(teamArray);
+        fs.writeFileSync('./dist/team.html', template);
+        console.log('Success, written to File');
+    }
+};
+
+const chooseEmpType = ({ chooseType }) => {
+    return prompt({
+        type: 'rawList',
+        message: 'What kind of employee would you like to add?',
+        choices: [
+            'Intern',
+            'Engineer',
+            'Manager'
+        ],
+        name: 'type'
+    })
+};
+
+const getEmpType = ({ getType }) => {
+    switch(type) {
+        case 'Engineer':{
+            return prompt(engineerQuestions);
+        }
+        case 'Intern':{
+            return prompt(internQuestions);
+        }
+        case 'Manager':{
+            return prompt(managerQuestions);
+        }
+    }
+}
+
 
 prompt(managerQuestions)
 .then(({ name, id, email, officeNumber}) => {
@@ -102,7 +148,7 @@ prompt(managerQuestions)
 })
 .then(() => {
     return prompt({
-        message: 'Would you like to add more employees',
+        message: 'Would you like to add more employees?',
         type: 'confirm',
         name: 'addMore'
     })
