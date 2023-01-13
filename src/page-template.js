@@ -1,10 +1,11 @@
 // create the team
 const generateTeamMembers = (team) => {
-    for (const member of team) {
+    return team.map(member =>  {
         if(member.getRole() === 'Engineer') {
-        return `///html snip for engineer
+        return `
         <article>
-          <h2>${member.Engineer()}</h2>
+          <h2>${member.getName()}</h2>
+          <h3>${member.getRole()}</h3>
           <ul>
             <li>ID: ${member.getId()}</li>
             <li>Email: ${member.getEmail()}</li>
@@ -12,10 +13,11 @@ const generateTeamMembers = (team) => {
           </ul>
         </article>
         `
-    } else if(member.getRole() === 'Intern') {
-    return `///html snip for engineer
+    } if(member.getRole() === 'Intern') {
+    return `
     <article>
-      <h2>${member.Intern()}</h2>
+      <h2>${member.getName()}</h2>
+      <h3>${member.getRole()}</h3>
       <ul>
         <li>ID: ${member.getId()}</li>
         <li>Email: ${member.getEmail()}</li>
@@ -23,10 +25,11 @@ const generateTeamMembers = (team) => {
       </ul>
     </article>
     `
-    } else if(member.getRole() === 'Manager') {
-    return `///html snip for engineer
+    } if(member.getRole() === 'Manager') {
+    return `
     <article>
-      <h2>${member.Manager()}</h2>
+      <h2>${member.getName()}</h2>
+      <h3>${member.getRole()}</h3>
       <ul>
         <li>ID: ${member.getId()}</li>
         <li>Email: ${member.getEmail()}</li>
@@ -35,13 +38,13 @@ const generateTeamMembers = (team) => {
     </article>
     `
     }
-}
+}).join('');
 };
 
 // export function to generate entire page
 module.exports = (team) => {
     // TODO: MAIN HTML TEMPLATE LITERAL GOES HERE
-    `<!-- Instructor provided template -->
+   return `<!-- Instructor provided template -->
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -80,30 +83,7 @@ module.exports = (team) => {
         <h1>My Team</h1>
       </header>
       <main>
-        <article>
-          <h2>Manager</h2>
-          <ul>
-            <li>ID: 1</li>
-            <li>Email: manager@email.com</li>
-            <li>Office Number: 123</li>
-          </ul>
-        </article>
-        <article>
-          <h2>Engineer</h2>
-          <ul>
-            <li>ID: 2</li>
-            <li>Email: engineer@email.com</li>
-            <li>GitHub: <a href="#github">person</a></li>
-          </ul>
-        </article>
-        <article>
-          <h2>Intern</h2>
-          <ul>
-            <li>ID: 3</li>
-            <li>Email: intern@email.com</li>
-            <li>School: FUN University</li>
-          </ul>
-        </article>
+        ${generateTeamMembers(team)}
       </main>
       <footer>
         &copy; 2022-2023

@@ -1,10 +1,12 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 
+const pageTemplate = require('./src/page-template');
+
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
-const pageTemplate = require('./src/page-template');
+
 
 const prompt = inquirer.createPromptModule();
 const teamArray = [];
@@ -83,13 +85,13 @@ const internQuestions = [
 //     let response;
 //     switch(type) {
 //         case 'Engineer':{
-//             response = prompt(engineerQuestions);
+//             response = await prompt(engineerQuestions);
 //         }
 //         case 'Intern':{
-//             response = prompt(internQuestions);
+//             response = await prompt(internQuestions);
 //         }
 //         case 'Manager':{
-//             response = prompt(managerQuestions);
+//             response = await prompt(managerQuestions);
 //         }
 //     }
 //     console.log('response');
@@ -103,37 +105,23 @@ const confirmEmp = () => {
     })
 };
 
-const addMoreEmp = ({ addMore }) => {
-    if (addMore) {
-        //console.log('Continue');
-        chooseEmpType()
-        .then(getEmpType)
-        .then(confirmEmp)
-        .then(addMoreEmp);
-    } else {
-        const template = pageTemplate(teamArray);
-        fs.writeFileSync('./dist/team.html', template);
-        //console.log('Success, written to File');
-    }
-};
-
 
 // already have this function on line 14?
-const chooseEmpType = () => {
+const chooseEmpType = (() => {
     return prompt({
         type: 'rawList',
         message: 'What kind of employee would you like to add?',
         choices: [
-            'Intern',
             'Engineer',
+            'Intern',
             'Manager'
         ],
         name: 'type'
     })
-};
+});
 
 // already have this function on line 14?
-const getEmpType = async ({ type }) => {
+const getEmpData = async ({ type }) => {
     switch(type) {
         case 'Engineer':{
             //return prompt(engineerQuestions);
@@ -162,6 +150,20 @@ const getEmpType = async ({ type }) => {
             console.log(teamArray);
             break;
         }
+    }
+};
+
+const addMoreEmp = ({ addMore }) => {
+    if (addMore) {
+        //console.log('Continue');
+        chooseEmpType()
+        .then(getEmpData)
+        .then(confirmEmp)
+        .then(addMoreEmp);
+    } else {
+        const template = pageTemplate(teamArray);
+        fs.writeFileSync('./dist/team.html', template);
+        console.log('Success, written to File');
     }
 };
 
