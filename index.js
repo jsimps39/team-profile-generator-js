@@ -129,7 +129,7 @@ const getEmpData = async ({ type }) => {
             const { name, id, email, gitHub } = response;
             const engineer = new Engineer(name, id, email, gitHub);
             teamArray.push(engineer);
-            console.log(teamArray);
+            //console.log(teamArray);
             break;
         }
         case 'Intern':{
@@ -138,7 +138,7 @@ const getEmpData = async ({ type }) => {
             const { name, id, email, school } = response;
             const intern = new Intern(name, id, email, school);
             teamArray.push(intern);
-            console.log(teamArray);
+            //console.log(teamArray);
             break;
         }
         case 'Manager':{
@@ -147,7 +147,7 @@ const getEmpData = async ({ type }) => {
             const { name, id, email, officeNumber } = response;
             const manager = new Manager(name, id, email, officeNumber);
             teamArray.push(manager);
-            console.log(teamArray);
+            //console.log(teamArray);
             break;
         }
     }
@@ -155,7 +155,6 @@ const getEmpData = async ({ type }) => {
 
 const addMoreEmp = ({ addMore }) => {
     if (addMore) {
-        //console.log('Continue');
         chooseEmpType()
         .then(getEmpData)
         .then(confirmEmp)
